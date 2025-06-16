@@ -1,14 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Спортивная школа - Главная";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-@if (User.Identity != null && User.Identity.IsAuthenticated)
-{
-    <a href="@Url.Action("Profile", "Account")">Мой профиль</a>
-}
-else
-{
-    <p>Пожалуйста, <a href="/login">войдите</a> в систему.</p>
-}
+<!--Главная страница сайта-->
+<div class="text-center">
+    <h1 class="display-4">Добро пожаловать в спортивную школу</h1>
+    
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <div class="mt-4 d-flex flex-column align-items-center" style="gap: 10px;">
+            <a href="@Url.Action("Profile", "Account")" class="btn btn-primary btn-lg" style="width: 400px;">
+                Мой профиль
+            </a>
+            <a href="@Url.Action("Index", "Schedule")" class="btn btn-primary btn-lg" style="width: 400px;">
+                Расписание событий
+            </a>
+            
+            @if (User.IsInRole("Администратор"))
+            {
+                <a href="@Url.Action("RegisterUser", "Admin")" class="btn btn-success btn-lg ml-3" style="width: 400px;">
+                    Зарегистрировать пользователя
+                </a>
+            }
+            @if (User.IsInRole("Тренер"))
+            {
+                <a href="@Url.Action("Athletes", "Coach")" class="btn btn-success btn-lg ml-3" style="width: 400px;">
+                    Список спортсменов
+                </a>
+                <a href="@Url.Action("Attendance", "Coach")" class="btn btn-success btn-lg ml-3" style="width: 400px;">
+                    Посещаемость
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="mt-4">
+            <a href="/login" class="btn btn-primary btn-lg">Войти</a>
+        </div>
+    }
+</div>

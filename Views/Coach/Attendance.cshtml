@@ -1,0 +1,79 @@
+@model AttendanceViewModel
+
+<!--Страница учета посещаемости спортсменов у тренера-->
+@{
+    var availableSessions = Model?.AvailableSessions ?? new List<TrainingSession>();
+    var currentSession = Model?.Session;
+    var athletes = Model?.Athletes ?? new List<AthleteAttendance>();
+}
+
+<h2>Учет посещаемости</h2>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form asp-action="Attendance" method="get">
+            <div class="form-group">
+                <label>Выберите занятие:</label>
+                <select name="sessionId" class="form-control" onchange="this.form.submit()">
+                    @foreach (var session in availableSessions)
+                    {
+                        <option value="@session?.Id" 
+                                selected="@(session?.Id == currentSession?.Id)">
+                            @(session?.StartTime.ToString("g") ?? "Нет даты") - @(session?.Description ?? "Без описания")
+                        </option>
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (currentSession != null)
+{
+    
+    <form asp-action="SaveAttendance">
+        <input type="hidden" name="Session.Id" value="@currentSession.Id" />
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Спортсмен</th>
+                    <th>Присутствовал</th>
+                    <th>Примечания</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < athletes.Count; i++)
+                {
+                    var athlete = athletes[i];
+                    <tr>
+                        <td>
+                            @(athlete?.AthleteName ?? "Неизвестный спортсмен")
+                            <input type="hidden" 
+                                   name="Athletes[@i].AthleteId" 
+                                   value="@athlete?.AthleteId" />
+                        </td>
+                        <td>
+                            <input type="checkbox" 
+                                   name="Athletes[@i].WasPresent" 
+                                   value="true"
+                                   checked="@(athlete?.WasPresent ?? false)" />
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   name="Athletes[@i].Notes" 
+                                   value="@athlete?.Notes" 
+                                   class="form-control" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-warning">Не выбрано активное занятие</div>
+}

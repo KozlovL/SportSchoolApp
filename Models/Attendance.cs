@@ -1,12 +1,24 @@
-public class Attendance
+using System.ComponentModel.DataAnnotations;
+
+namespace SportSchoolApp.Models
 {
-    public int Id { get; set; }
+    // Модель посещения 
+    public class Attendance
+    {
+        public int Id { get; set; }
 
-    public string AthleteId { get; set; } = string.Empty; // Инициализация по умолчанию
-    public ApplicationUser Athlete { get; set; } = new ApplicationUser(); // Инициализация по умолчанию
+        [Required]
+        public string AthleteId { get; set; } = string.Empty;
+        public ApplicationUser? Athlete { get; set; }
 
-    public int TrainingSessionId { get; set; }
-    public TrainingSession TrainingSession { get; set; } = new TrainingSession(); // Инициализация по умолчанию
+        [Required]
+        public int TrainingSessionId { get; set; }
+        public TrainingSession? TrainingSession { get; set; }
 
-    public bool IsPresent { get; set; } = false; // Инициализация по умолчанию
+        [Required]
+        public DateTime Date { get; set; }
+
+        public bool WasPresent { get; set; } = true;
+        public string Notes { get; set; } = string.Empty;
+    }
 }

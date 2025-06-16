@@ -1,0 +1,80 @@
+@model RegisterByAdminViewModel
+
+<h2>Регистрация нового пользователя</h2>
+
+<!--Страница регистрирования нового пользователя через администратора-->
+<form asp-action="RegisterUser" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+    <div class="form-group">
+        <label asp-for="FullName">Фамилия Имя Отчество</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Password">Пароль</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Подтвердите пароль</label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Номер телефона</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Role">Роль</label>
+        <select asp-for="Role" class="form-control" id="Role">
+            <option value="@UserRoles.Admin">Администратор</option>
+            <option value="@UserRoles.Coach">Тренер</option>
+            <option value="@UserRoles.Athlete">Спортсмен</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group" id="coachSelection" style="display:none;">
+        <label asp-for="CoachId">Выбор тренера</label>
+        <select asp-for="CoachId" class="form-control" asp-items="ViewBag.Coaches">
+            <option value="">Выбрать тренера</option>
+        </select>
+        <span asp-validation-for="CoachId" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var athleteRoleValue = 'Спортсмен';
+            
+            function toggleCoachSelection() {
+                var selectedRole = $('#Role').val();
+                console.log('Selected role:', selectedRole);
+                
+                if (selectedRole === athleteRoleValue) {
+                    $('#coachSelection').show();
+                } else {
+                    $('#coachSelection').hide();
+                }
+            }
+
+            toggleCoachSelection();
+            $('#Role').change(toggleCoachSelection);
+        });
+    </script>
+}

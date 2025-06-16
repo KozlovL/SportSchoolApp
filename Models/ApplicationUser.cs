@@ -1,11 +1,24 @@
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-public class ApplicationUser : IdentityUser
+namespace SportSchoolApp.Models
 {
-    public string FullName { get; set; } = string.Empty; // Инициализация по умолчанию
-    public string Role { get; set; } = "Athlete"; // Значение по умолчанию для роли
+  // Модель пользователя, наследуемая от IdentityUser
+  public class ApplicationUser : IdentityUser
+  {
+    [Required]
+    [StringLength(100)]
+    public string FullName { get; set; } = string.Empty;
 
-    public ICollection<TrainingSession> ConductedSessions { get; set; } = new List<TrainingSession>();
-    public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+    [StringLength(20)]
+    public override string? PhoneNumber { get; set; }
+    
+    public string? Role { get; set; }
+    public virtual ICollection<TrainingSession> ConductedSessions { get; set; } = new List<TrainingSession>();
+    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+    public string? CoachId { get; set; }
+    public virtual ApplicationUser? Coach { get; set; }
+    public virtual ICollection<ApplicationUser> Athletes { get; set; } = new List<ApplicationUser>();
+    public virtual ICollection<Competition> OrganizedCompetitions { get; set; } = new List<Competition>();
+  }
 }

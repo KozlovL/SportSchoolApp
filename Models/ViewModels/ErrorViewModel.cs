@@ -1,5 +1,6 @@
 namespace SportSchoolApp.Models;
 
+// Модель для отображения информации об ошибках
 public class ErrorViewModel
 {
     public string? RequestId { get; set; }

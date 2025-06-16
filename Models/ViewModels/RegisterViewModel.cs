@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+// Модель для регистрации пользователя администратором
 public class RegisterViewModel
 {
     [Required(ErrorMessage = "Электронная почта обязательна для заполнения.")]

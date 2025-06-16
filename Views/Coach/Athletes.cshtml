@@ -1,0 +1,24 @@
+@model IEnumerable<ApplicationUser>
+
+<!--Страница спортсменов у тренера-->
+<h2>Мои спортсмены</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Email</th>
+            <th>Телефон</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var athlete in Model)
+        {
+            <tr>
+                <td>@athlete.FullName</td>
+                <td>@athlete.Email</td>
+                <td>@athlete.PhoneNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>
