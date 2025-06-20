@@ -33,22 +33,13 @@
 
 ## Локальное развертывание с Docker
 
-1. **Клонируйте репозиторий:**
-```bash
-git clone https://github.com/KozlovL/SportSchoolApp.git
-```
-```bash
-cd SportSchoolApp
-```
-
-
-2. **Скачайте образ из Docker Hub:**
+1. **Скачайте образ из Docker Hub:**
 ```bash
 docker pull kozlovl/sportschoolapp:latest
 ```
 
 
-3. **Запустите проект в Docker-контейнере:**
+2. **Запустите проект в Docker-контейнере:**
 ```bash
 docker run -d -p 8080:8080 kozlovl/sportschoolapp:latest
 ```
